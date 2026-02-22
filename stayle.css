@@ -1,0 +1,33 @@
+body{
+    background-color: rgb(31, 39, 39);
+}
+#top{
+    color: rgb(90, 124, 138);
+    text-align: center;
+    text-decoration: dashed;
+    
+}
+#hh{
+    width: 500px;
+    height: 100px;
+}
+#plan{
+    color:rgb(255, 255, 255) ;
+    width:300px;
+}
+#about{
+    color: aqua;
+}
+.second{
+    color: #ffffff;
+ width: 600px;
+}
+#qut{
+    color: aqua;
+}
+#main{
+    color: aqua;
+}
+.con{
+    text-align: right;
+}
