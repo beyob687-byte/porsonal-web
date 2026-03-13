@@ -1,53 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>personal website</title>
-    <link rel="stylesheet" href="stayle.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Eyob Meketw — Portfolio</title>
+  <meta name="description" content="Eyob Meketw — Aspiring Software Engineer. Portfolio showcasing skills, sample projects, and contact information." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#6ee7b7;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.04);
+      --radius:14px;
+      --max-width:1100px;
+      --shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071028 0%, #071a2a 60%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:2rem;
+    }
+
+    /* Hero */
+    header.hero{
+      display:flex;
+      gap:2rem;
+      align-items:center;
+      justify-content:space-between;
+      padding:3rem 1rem;
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:2rem;
+      backdrop-filter: blur(6px);
+    }
+    .hero-left{
+      flex:1;
+    }
+    .name{
+      font-size:clamp(1.6rem, 3.6vw, 2.4rem);
+      margin:0 0 .4rem 0;
+      letter-spacing: -0.5px;
+    }
+    .tag{
+      color:var(--muted);
+      margin:0 0 1rem 0;
+      font-weight:500;
+    }
+    .cta{
+      display:inline-flex;
+      gap:.6rem;
+      align-items:center;
+      margin-top:1rem;
+    }
+    .btn{
+      background:linear-gradient(90deg,var(--accent), #34d399);
+      color:#042027;
+      padding:.6rem 1rem;
+      border-radius:10px;
+      font-weight:700;
+      text-decoration:none;
+      box-shadow: 0 6px 18px rgba(52,211,153,0.12);
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--accent);
+      border:1px solid rgba(110,231,183,0.12);
+      font-weight:600;
+    }
+
+    .hero-right{
+      width:220px;
+      min-width:160px;
+      text-align:center;
+    }
+    .avatar{
+      width:120px;
+      height:120px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#0ea5a5,#60a5fa);
+      display:inline-grid;
+      place-items:center;
+      font-weight:800;
+      color:#02121a;
+      font-size:1.6rem;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+    }
+    .edu{
+      margin-top:.8rem;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* Sections */
+    section{
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      margin-bottom:1.6rem;
+      padding:1.6rem;
+      border-radius:12px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.45);
+    }
+    h2{
+      margin:0 0 1rem 0;
+      color:var(--accent);
+      font-size:1.1rem;
+      letter-spacing:0.6px;
+    }
+    p.lead{
+      margin:0 0 1rem 0;
+      color:var(--muted);
+    }
+
+    /* Skills */
+    .skills-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:1rem;
+    }
+    .skill{
+      background:var(--card);
+      padding:1rem;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+    }
+    .skill-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight:700;
+      color:#e6eef6;
+      font-size:.95rem;
+    }
+    .progress{
+      height:12px;
+      background:var(--glass);
+      border-radius:999px;
+      overflow:hidden;
+      margin-top:.6rem;
+    }
+    .progress > i{
+      display:block;
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg,#34d399,#06b6d4);
+      border-radius:999px;
+      transition: width 1.2s cubic-bezier(.2,.9,.3,1);
+      box-shadow: 0 6px 18px rgba(6,182,212,0.08) inset;
+    }
+    .skill-note{
+      color:var(--muted);
+      font-size:.85rem;
+      margin-top:.6rem;
+    }
+
+    /* Projects */
+    .projects{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap:1rem;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:1rem;
+      border-radius:12px;
+      min-height:140px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.6);
+    }
+    .card h3{margin:0 0 .4rem 0}
+    .card p{margin:0;color:var(--muted);font-size:.95rem}
+
+    /* Contact */
+    .contact-list{
+      display:flex;
+      flex-direction:column;
+      gap:.6rem;
+      align-items:flex-start;
+    }
+    .contact-list a{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:700;
+    }
+    .contact-list .line{
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    /* Footer */
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-size:.9rem;
+      margin-top:1rem;
+    }
+
+    /* Responsive */
+    @media (max-width:820px){
+      .skills-grid{grid-template-columns:1fr}
+      header.hero{flex-direction:column;align-items:flex-start}
+      .hero-right{width:100%;display:flex;justify-content:flex-start;gap:1rem}
+    }
+  </style>
 </head>
 <body>
-  <div id="hh">
-    <h1 id="top">HELLO, I'm Eyob Meketw, I'm Software 
-    Engineering Student In Addis Ababa University</h1> </div>
-    <br>
-        <div> 
-         <p id="plan">Im mainly interested in web development especially full-stack development,
-         In addition, I have basic knowledge of Java and Python, and 
-         I've completed some projects using them.  </p> 
+  <div class="container">
+
+    <header class="hero" aria-label="Hero">
+      <div class="hero-left">
+        <h1 class="name">Eyob Meketw</h1>
+        <p class="tag">Student at Addis Ababa University School of Information and Technology Engineering — Software Engineering</p>
+        <p class="lead">Aspiring software engineer focused on building clean, responsive web experiences and reliable backend services. Seeking part‑time opportunities to contribute and grow.</p>
+        <div class="cta">
+          <a class="btn" href="#contact">Contact Me</a>
+          <a class="btn ghost" href="#projects">See Projects</a>
         </div>
-  <div>
-    <h2 id="about">
-        About Me
-    </h2>
-   <div class="second">
-     <p>
-        I don't know how to write about myself, but I am a
-         person who has positive thinking no matter what the situation is
-       <div class="second">
-         <ul class="list">
-            <li>I am a student who is eager to learn new things</li>
-            <li>a man who wants the best for his family</li>
-            <li>a friend who supports his companions in any situation</li>
-        </ul>
+      </div>
+
+      <div class="hero-right" aria-hidden="false">
+        <div class="avatar" aria-hidden="true">EM</div>
+        <div class="edu">Addis Ababa University<br/>Software Engineering</div>
+      </div>
+    </header>
+
+    <section id="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills</h2>
+      <p class="lead">Technical skills shown as proficiency levels. These reflect hands‑on practice and learning progress.</p>
+
+      <div class="skills-grid">
+        <div class="skill" aria-label="Programming languages">
+          <div class="skill-row"><span>Java</span><span>90%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><i style="width:90%"></i></div>
+          <div class="skill-row"><span>JavaScript</span><span>70%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><i style="width:70%"></i></div>
+          <div class="skill-row"><span>Python</span><span>50%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"><i style="width:50%"></i></div>
         </div>
-      <br>  
-        <em id="qut">a goal without plan is just a wish</em> 
-      I have goals, and they will not remain wishes because I have a plan to achieve 
-      them — and this is the first step.
-     </p>
-   </div >
-   <div class="con" id="main"><h2>contact me</h2>
-   <div class="con" id="sub">
-     <p>09-44-73-42-18 <br> 09-98-70-10-35</p>
-     <a href="mailto:beyob687@gmail.com" target="_blank"> send email</a>
-     <br>
-     <a href="https://t.me/e_y_o_b_a_17" target="_blank">telegram account</a>
-     <br>
-     <a href="https://github.com/beyob687-byte" target="_blank">git hub account</a>
-   </div>
-</div>
-  </div>      
-    
+
+        <div class="skill" aria-label="Web skills">
+          <div class="skill-row"><span>HTML</span><span>90%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><i style="width:90%"></i></div>
+          <div class="skill-row"><span>CSS</span><span>80%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><i style="width:80%"></i></div>
+          <div class="skill-note">GitHub familiarity: strong; profile: <strong>beyob687-byte</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Projects</h2>
+      <p class="lead">Sample projects and templates you can replace with your own work. Each card shows the skill focus.</p>
+
+      <div class="projects">
+        <article class="card">
+          <div>
+            <h3>Responsive Landing Page</h3>
+            <p>Clean, mobile‑first landing page demonstrating layout, typography, and responsive images.</p>
+          </div>
+          <div class="skill-note">Focus: HTML, CSS, JavaScript</div>
+        </article>
+
+        <article class="card">
+          <div>
+            <h3>Portfolio Template</h3>
+            <p>One‑page portfolio template with smooth scrolling and accessible components.</p>
+          </div>
+          <div class="skill-note">Focus: HTML, CSS</div>
+        </article>
+
+        <article class="card">
+          <div>
+            <h3>Interactive Form</h3>
+            <p>Styled contact form with client‑side validation and friendly UX.</p>
+          </div>
+          <div class="skill-note">Focus: JavaScript, HTML</div>
+        </article>
+
+        <article class="card">
+          <div>
+            <h3>Mini REST API</h3>
+            <p>Simple backend service demonstrating endpoints, data validation, and persistence.</p>
+          </div>
+          <div class="skill-note">Focus: Java, Python</div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <p class="lead">Reach out for part‑time roles, internships, or collaboration.</p>
+
+      <div class="contact-list">
+        <div class="line"><strong>GitHub</strong>: <a href="https://github.com/beyob687-byte" target="_blank" rel="noopener">beyob687-byte</a></div>
+        <div class="line"><strong>Email</strong>: <a href="mailto:beyob687@gmail.com">beyob687@gmail.com</a></div>
+        <div class="line"><strong>Phone</strong>: 0944734218 / 0998701035</div>
+        <div class="line"><strong>LinkedIn</strong>: <a href="https://www.linkedin.com/in/eyob-meketw-34ab873aa" target="_blank" rel="noopener">Eyob Meketw</a></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© 2026 Eyob Meketw — Student at Addis Ababa University</div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Animate progress bars on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.progress > i').forEach((el) => {
+        const w = el.style.width || '0%';
+        el.style.width = '0%';
+        requestAnimationFrame(() => {
+          el.style.width = w;
+        });
+      });
+    });
+  </script>
 </body>
 </html>
